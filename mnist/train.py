@@ -63,4 +63,5 @@ def main():
 
 
 if __name__ == '__main__':
+    tf.logging.set_verbosity(tf.logging.ERROR)
     main()
