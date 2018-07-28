@@ -19,7 +19,7 @@ def test(X_test, Y_test):
 
     saver = tf.train.Saver()
     with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
+        # sess.run(tf.global_variables_initializer())
         ckpt = tf.train.get_checkpoint_state('model')
         if ckpt and ckpt.model_checkpoint_path:
             saver.restore(sess, ckpt.model_checkpoint_path)
