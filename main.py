@@ -1,4 +1,5 @@
 import tensorflow as tf
+from flask import Flask, render_template
 
 from mnist import model
 
@@ -26,9 +27,14 @@ def inference(input):
         return sess.run(prediction, feed_dict={x:input, keep_prob:1.}).flatten().tolist()
 
 
+app = Flask(__name__)
+
+@app.route('/')
+def main():
+    return render_template('index.html')
+
+
+
 if __name__ == '__main__':
-    from tensorflow.examples.tutorials.mnist import input_data
-    mnist = input_data.read_data_sets('mnist/MNIST_data', one_hot=True)
-    prediction = inference(mnist.test.images[0:1])
-    print(mnist.test.labels[0:1])
-    print(prediction)
+    app.debug = True
+    app.run(host='0.0.0.0', port=8080)
