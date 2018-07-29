@@ -7,7 +7,7 @@
 * PyCharm CE
 
 ## Requirment
-* pip install -r requirments.txt
+* pip install -r requirements.txt -i https://pypi.douban.com/simple --trusted-host=pypi.douban.com
 
 ## Run
 * training: run "mnist/train.py" script
