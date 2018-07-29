@@ -31,7 +31,7 @@ class Main {
             this.ctx.stroke();
         }
         this.drawInput();
-        $('#output td').text('').removeClass('success');
+        $('#output td').text('').removeClass('table-success');
     }
     onMouseDown(e) {
         this.canvas.style.cursor = 'default';
@@ -82,16 +82,16 @@ class Main {
                 return;
             }
             $.ajax({
-                url: '/api/mnists',
+                url: '/inference',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(inputs),
                 success: (data) => {
-                    for (let i = 0; i < 2; i++) {
+//                    for (let i = 0; i < 2; i++) {
                         var max = 0;
                         var max_index = 0;
                         for (let j = 0; j < 10; j++) {
-                            var value = Math.round(data.results[i][j] * 1000);
+                            var value = Math.round(data.results[j] * 1000);
                             if (value > max) {
                                 max = value;
                                 max_index = j;
@@ -104,16 +104,16 @@ class Main {
                             if (value > 999) {
                                 text = '1.000';
                             }
-                            $('#output tr').eq(j + 1).find('td').eq(i).text(text);
+                            $('#output tr').eq(j).find('td').eq(0).text(text);
                         }
                         for (let j = 0; j < 10; j++) {
                             if (j === max_index) {
-                                $('#output tr').eq(j + 1).find('td').eq(i).addClass('success');
+                                $('#output tr').eq(j).find('td').eq(0).addClass('table-success');
                             } else {
-                                $('#output tr').eq(j + 1).find('td').eq(i).removeClass('success');
+                                $('#output tr').eq(j).find('td').eq(0).removeClass('table-success');
                             }
                         }
-                    }
+//                    }
                 }
             });
         };

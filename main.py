@@ -1,5 +1,6 @@
 import tensorflow as tf
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
+import numpy as np
 
 from mnist import model
 
@@ -29,12 +30,20 @@ def inference(input):
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def main():
     return render_template('index.html')
 
 
+@app.route('/inference', methods=['POST'])
+def mnist():
+    # MNIST data white and black value are opposite
+    input = ((255 - np.array(request.json, dtype=np.uint8)) / 255.0).reshape(1, 784)
+    prediction = inference(input)
+    # print(prediction)
+    return jsonify(results=prediction)
+
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0', port=8080)
+    app.run()
